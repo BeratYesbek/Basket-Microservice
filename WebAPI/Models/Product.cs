@@ -16,6 +16,7 @@ namespace WebAPI.Models
         public Category? Category { get; set; }
         public Color? Color { get; set; }
         public virtual List<ProductImage>? ProductImages { get; set; }
+        public virtual List<ShoppingCart>? ShoppingCarts { get; set; }
 
     }
 }

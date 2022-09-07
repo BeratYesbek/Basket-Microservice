@@ -2,16 +2,9 @@
 {
     public class ShoppingCart
     {
+        public int Id { get; set; }
         public int ExternalUserId { get; set; }
-
-        public List<Product>? Products { get; set; }
-
-        public float TotalPrice
-        {
-            get
-            {
-                return Products!.Sum(product => product.Price);
-            }
-        }
+        public int ProductId{ get; set; }
+        public Product? Product { get; set; }
     }
 }
