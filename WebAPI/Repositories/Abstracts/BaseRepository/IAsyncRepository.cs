@@ -2,10 +2,9 @@
 {
     public interface IAsyncRepository<T>
     {
-        Task<T> CreateAsync(T entity);
-        Task<T> UpdateAsync(T entity);
-        Task<List<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
-        Task DeleteAsync(int id);
+        Task CreateAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task<T> GetByUsernameAsync(string username);
+        Task DeleteAsync(string username);
     }
 }

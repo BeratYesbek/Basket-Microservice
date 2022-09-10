@@ -11,12 +11,11 @@ namespace WebAPI.Models
         public float Price { get; set; }
         public int Quantity { get; set; }
         public int CategoryId { get; set; }
+        public string? CategoryName { get; set; }
         public int ColorId { get; set; }
+        public string? ColorName { get; set; }
+        public List<string>? Images { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public Category? Category { get; set; }
-        public Color? Color { get; set; }
-        public virtual List<ProductImage>? ProductImages { get; set; }
-        public virtual List<ShoppingCart>? ShoppingCarts { get; set; }
 
     }
 }

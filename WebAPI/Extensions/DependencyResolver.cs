@@ -7,9 +7,6 @@ namespace WebAPI.Extensions
     {
         public static void LoadResolver(this IServiceCollection service)
         {
-            service.AddSingleton<IProductRepository, ProductRepository>();
-            service.AddSingleton<ICategoryRepository, CategoryRepository>();
-            service.AddSingleton<IProductImageRepository, ProductImageRepository>();
             service.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
         }
     }

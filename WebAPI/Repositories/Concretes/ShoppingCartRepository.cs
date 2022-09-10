@@ -1,37 +1,43 @@
-﻿using WebAPI.Models;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using WebAPI.Models;
 using WebAPI.Repositories.Abstracts;
 
 namespace WebAPI.Repositories.Concretes
 {
     public class ShoppingCartRepository : IShoppingCartRepository
     {
-        public ShoppingCartRepository()
+        private readonly IDistributedCache _cache;
+        public ShoppingCartRepository(IDistributedCache cache)
         {
-            
+            _cache = cache;
         }
-        public Task<ShoppingCart> CreateAsync(ShoppingCart entity)
+        public async Task CreateAsync(ShoppingCart entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<ShoppingCart> UpdateAsync(ShoppingCart entity)
-        {
-            throw new NotImplementedException();
+            var jsonValue = JsonConvert.SerializeObject(entity);
+            await _cache.SetStringAsync(entity.Username, jsonValue);
         }
 
-        public Task<List<ShoppingCart>> GetAllAsync()
+        public async Task UpdateAsync(ShoppingCart entity)
         {
-            throw new NotImplementedException();
+            var jsonValue = JsonConvert.SerializeObject(entity);
+            await _cache.SetStringAsync(entity.Username, jsonValue);
         }
 
-        public Task<ShoppingCart> GetByIdAsync(int id)
+        public async Task<ShoppingCart> GetByUsernameAsync(string username)
         {
-            throw new NotImplementedException();
+            var value = await _cache.GetStringAsync(username);
+            if (string.IsNullOrEmpty(value))
+            {
+                return null!;
+            }
+            return JsonConvert.DeserializeObject<ShoppingCart>(value)!;
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(string username)
         {
-            throw new NotImplementedException();
+            await _cache.RemoveAsync(username);
         }
+
     }
 }

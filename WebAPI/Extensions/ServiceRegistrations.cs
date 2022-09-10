@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebAPI.Data;
+﻿
+
+using Microsoft.Extensions.Configuration;
 
 namespace WebAPI.Extensions
 {
@@ -7,9 +8,12 @@ namespace WebAPI.Extensions
     {
         public static void ServiceRegister(this IServiceCollection service, IConfiguration configuration)
         {
-            service.AddDbContext<BasketDbContext>(opt => opt.UseSqlServer(
-                configuration.GetConnectionString("BasketConnectionString")
-                ));
+            service.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration.GetValue<string>("CacheSettings:ConnectionString");
+            });
+
+            service.AddAutoMapper(typeof(Program));
 
         }
     }
